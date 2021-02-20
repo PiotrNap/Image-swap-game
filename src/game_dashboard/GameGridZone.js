@@ -1,12 +1,17 @@
 // import { useState, useCallback } from "react";
 import ImageGridElement from "./ImageGridElement";
 
-export default function GameGridZone({ images }) {
-  console.log(images);
+export default function GameGridZone({ images, gridSize }) {
   return (
-    <div>
-      {images.map(image => {
-        return <ImageGridElement image={image} />;
+    <div className={`grid grid-cols-${gridSize} gap-3`}>
+      {images.map((image, i) => {
+        return (
+          <ImageGridElement
+            gridSize={gridSize}
+            key={i.toString()}
+            image={image}
+          />
+        );
       })}
     </div>
   );

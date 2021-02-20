@@ -9,6 +9,7 @@ function App() {
   const [images, setImages] = useState(null);
   const [newGame, setNewGame] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [gridSize, setGridSize] = useState(null);
 
   const onFormSubmition = async e => {
     e.preventDefault();
@@ -19,11 +20,15 @@ function App() {
       return alert("Please select one option to continue.");
     }
     setLoading(true);
-    var data = await ImagesApi(selectedGrid.value);
+
+    var numOfImages = (selectedGrid.value * selectedGrid.value) / 2;
+    var data = await ImagesApi(numOfImages);
+
     // double the images array and shuffle
     data = [...data, ...data].sort((a, b) => 0.5 - Math.random());
     setImages(data);
     setNewGame(false);
+    setGridSize(selectedGrid.value);
     setLoading(false);
   };
 
@@ -37,7 +42,7 @@ function App() {
         {newGame ? (
           <IntroWindow onFormSubmition={onFormSubmition} />
         ) : (
-          <GameGridZone images={images} />
+          <GameGridZone images={images} gridSize={gridSize} />
         )}
       </header>
     </div>
