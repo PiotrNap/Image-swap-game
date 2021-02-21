@@ -7,7 +7,6 @@ export default function ImageGridElement({
   resolved
 }) {
   var cardSize = 760 / gridSize;
-  console.log(flipped);
 
   return (
     <div className="perspective" onClick={e => onClickHandler(e)}>

@@ -1,11 +1,13 @@
 import { useState } from "react";
 import ImagesApi from "./utils/imagesApi";
 import LoadingSpinner from "./ui_tools/LoadingSpinner";
+import GameTimer from "./ui_tools/GameTimer";
 import GameGridZone from "./game_dashboard/GameGridZone";
 import IntroWindow from "./IntroWindow";
 import "./App.css";
 
 function App() {
+  const [startTime, setStartTime] = useState(0);
   const [images, setImages] = useState(null);
   const [newGame, setNewGame] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -28,6 +30,7 @@ function App() {
     data = [...data, ...data].sort((a, b) => 0.5 - Math.random());
     setImages(data);
     setNewGame(false);
+    setStartTime(selectedGrid.value / 2);
     setGridSize(selectedGrid.value);
     setLoading(false);
   };
@@ -42,7 +45,10 @@ function App() {
         {newGame ? (
           <IntroWindow onFormSubmition={onFormSubmition} />
         ) : (
-          <GameGridZone images={images} gridSize={gridSize} />
+          <>
+            <GameTimer startTime={startTime} />
+            <GameGridZone images={images} gridSize={gridSize} />
+          </>
         )}
       </header>
     </div>
