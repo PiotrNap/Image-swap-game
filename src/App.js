@@ -1,8 +1,9 @@
 import { useState } from "react";
 import ImagesApi from "./utils/imagesApi";
-import LoadingSpinner from "./ui_tools/LoadingSpinner";
-import GameTimer from "./ui_tools/GameTimer";
+import LoadingSpinner from "./ui_components/LoadingSpinner";
+import GameTimer from "./ui_components/GameTimer";
 import GameGridZone from "./game_dashboard/GameGridZone";
+import EndGamePopup from "./ui_components/EndGamePopup";
 import IntroWindow from "./IntroWindow";
 import "./App.css";
 
@@ -12,6 +13,7 @@ function App() {
   const [newGame, setNewGame] = useState(true);
   const [loading, setLoading] = useState(false);
   const [gridSize, setGridSize] = useState(null);
+  const [endGame, setEndGame] = useState(false);
 
   const onFormSubmition = async e => {
     e.preventDefault();
@@ -35,18 +37,23 @@ function App() {
     setLoading(false);
   };
 
+  const gameEnded = () => {
+    setEndGame(true);
+  };
+
   if (loading) {
     return <LoadingSpinner />;
   }
 
   return (
-    <div className="App">
+    <div className="App relative">
       <header className="App-header">
         {newGame ? (
           <IntroWindow onFormSubmition={onFormSubmition} />
         ) : (
           <>
-            <GameTimer startTime={startTime} />
+            {endGame ? <EndGamePopup /> : ""}
+            <GameTimer startTime={startTime} gameEnded={gameEnded} />
             <GameGridZone images={images} gridSize={gridSize} />
           </>
         )}
