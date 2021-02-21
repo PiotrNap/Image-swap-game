@@ -7,7 +7,7 @@ export default function GameTimer({ startTime, gameEnded }) {
     if (!startTime) window.location.reload();
     var timer = document.querySelector("#timer");
     var initialWidth = timer.offsetWidth;
-    var milsecPixels = initialWidth / (startTime * 60);
+    var milsecPixels = initialWidth / (startTime * 60 * 3);
     var interval = setInterval(() => {
       if (timer.offsetWidth > 0 && timer.offsetWidth >= milsecPixels) {
         timer.style.width = timer.offsetWidth - milsecPixels + "px";
